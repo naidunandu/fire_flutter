@@ -17,7 +17,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // If the user is signed in, go to the HomePage
         if (snapshot.connectionState == ConnectionState.active) {
           final user = snapshot.data;
           if (user == null) {

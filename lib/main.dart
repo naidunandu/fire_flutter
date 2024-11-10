@@ -1,15 +1,14 @@
 import 'dart:io';
 
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-
-import 'routes/route_methods.dart';
 import 'routes/route_names.dart';
+import 'routes/route_methods.dart';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'services/firebase_auth_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +20,6 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
   await Get.putAsync(() => FirebaseAuthService().init());
   runApp(const MyApp());
 }

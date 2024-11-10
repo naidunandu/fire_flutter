@@ -1,12 +1,15 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'dart:async';
+
+import 'package:get/get.dart';
 import 'package:fire_flutter/helpers/alerts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class FirebaseAuthService extends GetxService {
   Future<FirebaseAuthService> init() async => this;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  RxBool hasInternet = false.obs;
   //Register a new user
   Future<User?> registerWithEmailAndPassword(String email, String password) async {
     try {
@@ -32,13 +35,15 @@ class FirebaseAuthService extends GetxService {
       if (error.contains("[firebase_auth/weak-password]")) {
         error = error.split("[firebase_auth/weak-password]").last;
       }
+
+      if (error.contains("The supplied auth credential is incorrect")) {
+        return null;
+      }
       showAlert("Error", error, ContentType.failure);
       return null;
     }
   }
 
   // Sign out
-  Future<void> signOut() async {
-    await _auth.signOut();
-  }
+  Future<void> signOut() async => await _auth.signOut();
 }

@@ -3,6 +3,7 @@ import 'package:fire_flutter/screens/add_employee.dart';
 import 'package:fire_flutter/screens/home.dart';
 import 'package:fire_flutter/screens/login.dart';
 import 'package:fire_flutter/screens/splash.dart';
+import 'package:fire_flutter/widgets/no_internet.dart';
 import 'package:get/get.dart';
 
 class AppRouteMethods {
@@ -26,5 +27,6 @@ class AppRouteMethods {
     getPage(name: AppRouteNames.login, page: () => const LoginScreen()),
     getPage(name: AppRouteNames.home, page: () => const HomeScreen()),
     getPage(name: AppRouteNames.addEmployee, page: () => const AddEmployee()),
+    getPage(name: AppRouteNames.noInternet, page: () => const NoInternetWidget()),
   ];
 }
