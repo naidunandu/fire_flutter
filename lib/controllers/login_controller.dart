@@ -14,15 +14,20 @@ class LoginController extends GetxController {
   TextEditingController txtEmailAddress = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
 
+  bool isLoading = false;
   onSubmit() async {
     bool hasInternetAccess = await InternetConnection().hasInternetAccess;
     if (hasInternetAccess) {
       if (formKey.currentState!.validate()) {
         try {
+          isLoading = true;
+          update();
           String email = txtEmailAddress.text;
           String password = txtPassword.text;
           User? user = await authService.signInWithEmailAndPassword(email, password);
           user ??= await authService.registerWithEmailAndPassword(email, password);
+          isLoading = false;
+          update();
           if (user != null) {
             Get.toNamed(AppRouteNames.home);
           }
@@ -30,6 +35,8 @@ class LoginController extends GetxController {
           if (kDebugMode) {
             print("onCatch");
             print(err.toString());
+            isLoading = false;
+            update();
           }
         }
       }

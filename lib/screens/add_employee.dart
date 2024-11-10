@@ -24,6 +24,7 @@ class _AddEmployeeState extends State<AddEmployee> {
               children: [
                 TextField(
                   controller: ctrl.txtName,
+                  readOnly: ctrl.isLoading,
                   decoration: InputDecoration(
                     hintText: "Name",
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -47,6 +48,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                 ).marginOnly(bottom: 15),
                 TextField(
                   controller: ctrl.txtPosition,
+                  readOnly: ctrl.isLoading,
                   decoration: InputDecoration(
                     hintText: "Position",
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -72,10 +74,19 @@ class _AddEmployeeState extends State<AddEmployee> {
                 CupertinoButton(
                   color: Colors.green,
                   onPressed: () => ctrl.addEmployee(),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Add Employee"),
+                      if (ctrl.isLoading)
+                        const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 1,
+                          ),
+                        ).marginOnly(right: 10),
+                      const Text("Save"),
                     ],
                   ),
                 ),

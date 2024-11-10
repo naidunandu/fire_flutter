@@ -11,18 +11,28 @@ class AddEmployeeController extends GetxController {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtPosition = TextEditingController();
 
+  bool isLoading = false;
   Future<void> addEmployee() async {
     bool hasInternetAccess = await InternetConnection().hasInternetAccess;
     if (hasInternetAccess) {
+      isLoading = true;
+      update();
       final name = txtName.text.trim();
       final position = txtPosition.text.trim();
 
-      if (name.isNotEmpty && position.isNotEmpty) {
-        await employeeRepository.addEmployee(name, position);
-        Get.back();
-        showAlert("Success", "Employee Added!", ContentType.success);
-      } else {
-        showAlert("Warning", "Please enter both name and position", ContentType.warning);
+      try {
+        if (name.isNotEmpty && position.isNotEmpty) {
+          await employeeRepository.addEmployee(name, position);
+          Get.back();
+          showAlert("Success", "Employee Added!", ContentType.success);
+        } else {
+          showAlert("Warning", "Please enter both name and position", ContentType.warning);
+        }
+      } catch (err) {
+        showAlert("Error", err.toString(), ContentType.failure);
+      } finally {
+        isLoading = false;
+        update();
       }
     } else {
       showAlert("Warning", "Not Internet Access", ContentType.warning);

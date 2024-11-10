@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   children: [
                                     TextFormField(
                                       controller: ctrl.txtEmailAddress,
+                                      readOnly: ctrl.isLoading,
                                       decoration: const InputDecoration(
                                         hintText: 'Email Address',
                                         filled: true,
@@ -78,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                                       child: TextFormField(
                                         obscureText: true,
+                                        readOnly: ctrl.isLoading,
                                         controller: ctrl.txtPassword,
                                         decoration: const InputDecoration(
                                           hintText: 'Password',
@@ -109,7 +111,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                         minimumSize: const Size(double.infinity, 48),
                                         shape: const StadiumBorder(),
                                       ),
-                                      child: const Text("Sign in"),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          if (ctrl.isLoading)
+                                            const SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 1,
+                                              ),
+                                            ).marginOnly(right: 10),
+                                          const Text("Sign in"),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
